@@ -1,25 +1,24 @@
-import React, { FormEventHandler } from "react";
+import React, { useRef } from "react";
 
 interface AddToDoProps {
-  submit: FormEventHandler,
-  refer: React.RefObject<HTMLInputElement>
+  submit: (text: string) => void
 }
 
-const AddToDo: React.FC<AddToDoProps> = (props) => {
-  // const inputRef = useRef<HTMLInputElement>(null)
+const AddToDo: React.FC<AddToDoProps> = props => {
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  // const handleSubmit = (evt: React.FormEvent) => {
-  //   evt.preventDefault();
+  const handleSubmit = (evt: React.FormEvent) => {
+    evt.preventDefault();
 
-  //   const inputTask = inputRef.current!.value
-  //   console.log(inputTask)
-  //   return;
-  // }
+    const inputTask = inputRef.current!.value
+    props.submit(inputTask)
+    // return;
+  }
 
-  return <form onSubmit={props.submit}>
+  return <form onSubmit={handleSubmit}>
     <div>
       <label htmlFor="todo-inp">Task</label>
-      <input type="text" id="todo-inp" ref={props.refer}/>
+      <input type="text" id="todo-inp" ref={inputRef}/>
     </div>
     <button type="submit">Add ToDo</button>
   </form>
