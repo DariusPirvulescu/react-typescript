@@ -6,9 +6,13 @@ import { ToDo } from "./todo.model";
 const App: React.FC = () => {
   const [ todos, setTodos ] = useState<ToDo[]>([{ id: "1", task: "Learn React with TS" }])
   
+  const deleteToDo = (todoId: string) => {
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.id !== todoId )
+    })
+  }
   
   const getInputText = (text: string) => {
-    console.log(text)
     setTodos(prevTodos => [
       ...prevTodos, 
       {id: Math.random().toString(), task: text}
@@ -18,7 +22,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <AddToDo submit={getInputText} />
-      <ToDoList items={todos}/>
+      <ToDoList items={todos} handleDelete={deleteToDo}  />
     </div>
   );
 }
